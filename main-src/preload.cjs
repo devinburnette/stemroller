@@ -37,6 +37,7 @@ contextBridge.exposeInMainWorld('getPyTorchBackend', () => ipcRenderer.invoke('g
 contextBridge.exposeInMainWorld('setPyTorchBackend', (backend) =>
   ipcRenderer.invoke('setPyTorchBackend', backend)
 )
+contextBridge.exposeInMainWorld('getProgess', () => ipcRenderer.invoke('getProgress'))
 
 let handlers = new Map()
 contextBridge.exposeInMainWorld(
@@ -70,6 +71,10 @@ ipcRenderer.on('videoStatusUpdate', (event, message) => {
       handler(message)
     }
   }
+})
+
+ipcRenderer.on('progress', (event, message) => {
+  console.log(message)
 })
 
 let donateUpdateHandler = null

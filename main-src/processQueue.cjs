@@ -112,6 +112,7 @@ function spawnAndWait(cwd, command, args) {
     })
 
     curChildProcess.stderr.on('data', (data) => {
+      module.exports.progress(data)
       console.log(`child stderr:\n${data}`)
     })
 
@@ -451,6 +452,11 @@ module.exports.getPyTorchBackend = () => {
 
 module.exports.setPyTorchBackend = (backend) => {
   electronStore.set('pyTorchBackend', backend)
+}
+
+module.exports.progress = (p) => {
+  console.log(p)
+  return null
 }
 
 module.exports.getVideoStatus = (videoId) => {

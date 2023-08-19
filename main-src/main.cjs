@@ -156,6 +156,11 @@ async function handleSetPyTorchBackend(event, backend) {
   return processQueue.setPyTorchBackend(backend)
 }
 
+async function handleProgress(event, progress) {
+  mainWindow.webContents.send('progress', progress)
+  return null
+}
+
 let mainWindow = null
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -281,6 +286,7 @@ function main() {
     ipcMain.handle('setOutputFormat', handleSetOutputFormat)
     ipcMain.handle('getPyTorchBackend', handleGetPyTorchBackend)
     ipcMain.handle('setPyTorchBackend', handleSetPyTorchBackend)
+    ipcMain.handle('progress', handleProgress)
   })
 
   app.on('window-all-closed', async () => {
